@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BookWise.Infrastructure\BookWise.Infrastructure.csproj" />
-  </ItemGroup>
-
 </Project>

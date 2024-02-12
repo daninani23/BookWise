@@ -19,8 +19,4 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BookWise.Core\BookWise.Core.csproj" />
-  </ItemGroup>
-
 </Project>

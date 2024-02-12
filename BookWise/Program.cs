@@ -1,7 +1,7 @@
-using BookWise.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BookWise.Infrastructure.Data.Models;
+using BookWise.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +20,9 @@ builder.Services.AddDefaultIdentity<User>
     })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddApplicationServices();
+
 
 
 var app = builder.Build();

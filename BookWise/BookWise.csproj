@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookWise.Core\BookWise.Core.csproj" />
-    <ProjectReference Include="..\BookWise.Infrastructure\BookWise.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

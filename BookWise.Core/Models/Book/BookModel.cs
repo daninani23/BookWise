@@ -10,21 +10,25 @@ namespace BookWise.Core.Models.Book
 {
     public class BookModel
     {
-
-        [StringLength(TitleMaxLength,MinimumLength =TitleMinLength)]
+        [Required(ErrorMessage = "Title of book is required.")]
+        [StringLength(TitleMaxLength,MinimumLength =TitleMinLength,ErrorMessage = "Title should be between {2} and {1} characters long.")]
         public string Title { get; set; } = null!;
 
-        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
+        [Required(ErrorMessage = "Description of book is required.")]
+        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength,ErrorMessage = "Book should be between {2} and {1} characters long.")]
         public string Description { get; set; } = null!;
 
-        [Range(PageNumMinLength,PageNumMaxLength)]
+        [Required(ErrorMessage = "Pages of book is required.")]
+        [Range(PageNumMinLength,PageNumMaxLength,ErrorMessage= "Book should be between {1} and {2} pages.")]
         [Display(Name = "Print length")]
         public int NumberOfPages { get; set; }
+
 
         [Display(Name ="Publication date")]
         public DateTime? PublicationDate { get; set; }
 
-        [StringLength(PublisherMaxLength,MinimumLength=PublisherMinLength)]
+        [Required(ErrorMessage = "Publisher of book is required.")]
+        [StringLength(PublisherMaxLength,MinimumLength=PublisherMinLength,ErrorMessage = "Publisher should be between {2} and {1} characters long.")]
         public string Publisher { get; set; } = null!;
 
         [Display(Name ="Image URL")]

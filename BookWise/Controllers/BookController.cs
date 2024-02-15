@@ -1,12 +1,22 @@
-﻿using BookWise.Core.Models.Book;
+﻿using BookWise.Core.Contracts;
+using BookWise.Core.Models.Book;
+using BookWise.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookWise.Controllers
 {
     //[Authorize]
     public class BookController : Controller
     {
+        private readonly IBookService bookService;
+
+        public BookController(IBookService _bookService)
+        {
+            bookService = _bookService;
+        }
+
         [AllowAnonymous]
         public async Task<IActionResult> All()
         {
@@ -30,16 +40,32 @@ namespace BookWise.Controllers
 
         //[Authorize]
         [HttpGet]
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            return View();
+            var model = new BookModel()
+            {
+                Genres = (await bookService.AllGenres()).ToList(),
+                Authors= (await bookService.AllAuthors()).ToList()   
+            };
+            return View(model);
         }
         //[Authorize]
         [HttpPost]
         public async Task<IActionResult> Add(BookModel model)
         {
-            int id = 1;
-            return RedirectToAction(nameof(Details), new { id });
+            if (!ModelState.IsValid) 
+            { 
+                return View(model);
+            }
+            try
+            {
+                int id = await bookService.Create(model);
+                return RedirectToAction(nameof(Details), new { id });
+            }
+            catch (Exception ex) 
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         //[Authorize]

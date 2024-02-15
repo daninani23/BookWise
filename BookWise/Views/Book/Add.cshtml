@@ -1,0 +1,64 @@
+﻿@model BookModel
+@{
+    ViewBag.Title = "Add Book";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<form asp-action="Add" method="post">
+    <div class="form-group">
+        <label asp-for="Title" class="control-label">Title:</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label">Description:</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageUrl" class="control-label">Image URL:</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NumberOfPages" class="control-label">Number of Pages:</label>
+        <input asp-for="NumberOfPages" class="form-control" />
+        <span asp-validation-for="NumberOfPages" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PublicationDate" class="control-label">Publication Date:</label>
+        <input asp-for="PublicationDate" class="form-control"  type="date"/>
+        <span asp-validation-for="PublicationDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Publisher" class="control-label">Publisher:</label>
+        <input asp-for="Publisher" class="form-control" />
+        <span asp-validation-for="Publisher" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SelectedGenres" class="control-label">Genres:</label>
+            @foreach (var genre in Model.Genres)
+        {
+            <label class="checkbox-inline">
+                <input type="checkbox" name="SelectedGenres" value="@genre.Id" /> @genre.Name
+            </label>
+        }
+        <span asp-validation-for="SelectedGenres" class="small text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SelectedAuthors" class="control-label">Authors:</label>
+            @foreach (var author in Model.Authors)
+            {
+            <label class="checkbox-inline">
+                    <input type="checkbox" name="SelectedAuthors" value="@author.Id"/>@($"{author.FirstName} {author.LastName}")
+                    </label>
+            }
+        <span asp-validation-for="SelectedAuthors" class="small text-danger"></span>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+

@@ -5,5 +5,12 @@ namespace BookWise.Core.Contracts
     public interface IBookService
     {
         Task<IEnumerable<BookHomeModel>> LastFourBooks();
+
+        Task<IEnumerable<GenreModel>> AllGenres();
+        Task<IEnumerable<AuthorModel>> AllAuthors();
+
+        //Task<bool> GenreExists(int genreId);
+        //Task<bool> AuthorExists(int authorId);
+        Task<int> Create(BookModel model);
     }
 }

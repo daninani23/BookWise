@@ -3,6 +3,10 @@ using BookWise.Core.Models.Book;
 using BookWise.Infrastructure.Data.Common;
 using BookWise.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using static BookWise.Infrastructure.Data.DataConstants;
+using Author = BookWise.Infrastructure.Data.Models.Author;
+using Book = BookWise.Infrastructure.Data.Models.Book;
+using Genre = BookWise.Infrastructure.Data.Models.Genre;
 
 namespace BookWise.Core.Services
 {
@@ -14,6 +18,101 @@ namespace BookWise.Core.Services
         {
             repo = _repo;
         }
+
+        public async Task<IEnumerable<AuthorModel>> AllAuthors()
+        {
+            return await repo.AllReadonly<Author>()
+                .OrderBy(a => a.FirstName).ThenBy(a => a.LastName)
+                .Select(a => new AuthorModel()
+                {
+                    Id = a.Id,
+                    FirstName = a.FirstName,
+                    LastName = a.LastName
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<GenreModel>> AllGenres()
+        {
+            return await repo.AllReadonly<Genre>()
+                .OrderBy(g => g.Name)
+                .Select(g => new GenreModel()
+                {
+                    Id = g.Id,
+                    Name = g.Name
+                })
+                .ToListAsync();
+        }
+
+        //public async Task<bool> AuthorExists(int authorId)
+        //{
+        //    return await repo.AllReadonly<Author>().AnyAsync(a => a.Id == authorId);
+        //}
+
+        public async Task<int> Create(BookModel model)
+        {  
+               
+            var book = new Book()
+            {
+                Title = model.Title,
+                ImageUrl = model.ImageUrl,
+                Description = model.Description,
+                NumberOfPages = model.NumberOfPages,
+                PublicationDate = model.PublicationDate,
+                Publisher = model.Publisher
+
+            };
+
+            await repo.AddAsync(book);
+            await repo.SaveChangesAsync();
+
+            foreach (var genreid in model.SelectedGenres)
+            {
+                var existingGenre = await repo.GetByIdAsync<Genre>(genreid);
+                if (existingGenre == null)
+                {
+
+                }
+                else
+                {
+                    var bookGenre = new BookGenre
+                    {
+                        BookId = book.Id,
+                        GenreId = genreid
+                    };
+
+                    await repo.AddAsync<BookGenre>(bookGenre);
+                }
+            }
+
+            foreach (var authorid in model.SelectedAuthors)
+            {
+                var existingAuthor = await repo.GetByIdAsync<Author>(authorid); 
+                if (existingAuthor == null) 
+                { 
+
+                }
+                else
+                {
+                    var bookAuthor = new BookAuthor
+                    {
+                        BookId = book.Id,
+                        AuthorId = authorid
+                    };
+
+                    await repo.AddAsync<BookAuthor>(bookAuthor);
+                }
+            }
+
+            await repo.SaveChangesAsync();
+            return book.Id;
+        }
+
+
+        //public async Task<bool> GenreExists(int genreId)
+        //{
+        //    return await repo.AllReadonly<Genre>().AnyAsync(g => g.Id == genreId);
+        //}
 
         public async Task<IEnumerable<BookHomeModel>> LastFourBooks()
         {

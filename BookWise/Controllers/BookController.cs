@@ -35,7 +35,11 @@ namespace BookWise.Controllers
         //[Authorize]
         public async Task<IActionResult> Details(int id)
         {
-            
+            if ((await bookService.BookExist(id)) == false)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
             var model = await bookService.Details(id);
             return View(model);
         }

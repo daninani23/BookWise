@@ -20,7 +20,7 @@ namespace BookWise.Core.Services
 
         public IEnumerable<BookServiceModel> All()
         {
-            return GetBooks(repo.All<Book>().OrderByDescending(x=>x.Title));
+            return GetBooks(repo.All<Book>().OrderByDescending(x => x.Title));
         }
 
         private static IEnumerable<BookServiceModel> GetBooks(IQueryable<Book> bookQuery)
@@ -35,10 +35,10 @@ namespace BookWise.Core.Services
                     BookGenres = b.BookGenres.Select(bg => bg.Genre.Name).ToList(),
                     BookAuthors = b.BookAuthors.Select(bg => $"{bg.Author.FirstName} {bg.Author.LastName}").ToList()
                 }).ToList();
-                
+
             return books;
         }
-       
+
         public async Task<IEnumerable<AuthorModel>> AllAuthors()
         {
             return await repo.AllReadonly<Author>()
@@ -70,8 +70,8 @@ namespace BookWise.Core.Services
         //}
 
         public async Task<int> Create(BookModel model)
-        {  
-               
+        {
+
             var book = new Book()
             {
                 Title = model.Title,
@@ -107,9 +107,9 @@ namespace BookWise.Core.Services
 
             foreach (var authorid in model.SelectedAuthors)
             {
-                var existingAuthor = await repo.GetByIdAsync<Author>(authorid); 
-                if (existingAuthor == null) 
-                { 
+                var existingAuthor = await repo.GetByIdAsync<Author>(authorid);
+                if (existingAuthor == null)
+                {
 
                 }
                 else
@@ -138,11 +138,11 @@ namespace BookWise.Core.Services
         {
             return await repo.AllReadonly<Book>()
                 .OrderByDescending(b => b.Id)
-                .Select(b => new BookHomeModel() 
-                { 
-                    Id= b.Id,
-                    Title= b.Title,
-                    ImageUrl= b.ImageUrl
+                .Select(b => new BookHomeModel()
+                {
+                    Id = b.Id,
+                    Title = b.Title,
+                    ImageUrl = b.ImageUrl
                 })
                 .Take(4)
                 .ToListAsync();
@@ -158,6 +158,7 @@ namespace BookWise.Core.Services
                             .ToList();
         }
 
+
         public async Task<BookDetailsModel> Details(int id) => await repo.AllReadonly<Book>()
             .Where(b => b.Id == id)
             .Select(bg => new BookDetailsModel()
@@ -165,17 +166,20 @@ namespace BookWise.Core.Services
                 Id = bg.Id,
                 Title = bg.Title,
                 ImageUrl = bg.ImageUrl,
-                Description= bg.Description,
-                PublicationDate= bg.PublicationDate,
+                Description = bg.Description,
+                PublicationDate = bg.PublicationDate,
                 ReviewsCount = bg.Reviews.Count(),
                 Rating = bg.Reviews.Average(r => r.Rating) == null ? 0 : bg.Reviews.Average(r => r.Rating),
-                Publisher  =bg.Publisher,
-                NumberOfPages=bg.NumberOfPages,
-                BookGenres= bg.BookGenres.Select(bt => bt.Genre.Name).ToList(),
+                Publisher = bg.Publisher,
+                NumberOfPages = bg.NumberOfPages,
+                BookGenres = bg.BookGenres.Select(bt => bt.Genre.Name).ToList(),
                 BookAuthors = bg.BookAuthors.Select(bt => $"{bt.Author.FirstName} {bt.Author.LastName}").ToList()
 
             }).FirstAsync();
 
-       
+        public async Task<bool> BookExist(int id) 
+        {
+            return await repo.AllReadonly<Book>().AnyAsync(b => b.Id ==id); 
+        }
     }
 }

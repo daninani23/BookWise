@@ -10,6 +10,7 @@ namespace BookWise.Core.Contracts
 
         Task<IEnumerable<GenreModel>> AllGenres();
         Task<IEnumerable<AuthorModel>> AllAuthors();
+        Task<bool> BookExist(int id);
 
         //Task<bool> GenreExists(int genreId);
         //Task<bool> AuthorExists(int authorId);

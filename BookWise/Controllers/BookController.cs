@@ -20,7 +20,7 @@ namespace BookWise.Controllers
         [AllowAnonymous]
         public IActionResult All()
         {
-            var books = this.bookService.All();
+            var books = bookService.All();
 
             return View(books);
         }

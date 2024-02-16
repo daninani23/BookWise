@@ -9,16 +9,14 @@
                 <div class="img-box">
                     <img src="@book.ImageUrl" style="height: 400px;" alt="@book.Title">
                     <h4 class="blog_date">
-                        <span>
-                            @book.AuthorNames
-                        </span>
+                        <p class="font-italic font-weight-bold">@string.Join(", ", book.BookAuthors)</p>
                     </h4>
                 </div>
                 <div class="detail-box">
                     <h5 style="margin-bottom = 50px;">
                         @book.Title
                     </h5>
-                    <h6 class="font-italic font-weight-bold">@book.GenreNames</h6>
+                   <h6 class="font-italic font-weight-bold">@string.Join(", ", book.BookGenres)</h6>
                     <p>
                         @book.Description...
                     </p>

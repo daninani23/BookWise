@@ -19,6 +19,25 @@ namespace BookWise.Core.Services
             repo = _repo;
         }
 
+        public IEnumerable<BookServiceModel> All()
+        {
+            return GetBooks(this.repo.AllReadonly<Book>().OrderByDescending(x=>x.Title));
+        }
+
+        private static IEnumerable<BookServiceModel> GetBooks(IEnumerable<Book> bookQuery)
+            => bookQuery
+                .Select(b => new BookServiceModel
+                {
+                    Id = b.Id,
+                    Title = b.Title,
+                    Publisher=b.Publisher,
+                    Description = b.Description.Substring(0, 150),
+                    ImageUrl = b.ImageUrl,
+                    GenreNames = string.Join(", ", b.BookGenres.Select(bg => bg.Genre.Name)),
+                    AuthorNames = string.Join(", ", b.BookAuthors.Select(bg => $"{bg.Author.FirstName} {bg.Author.LastName}"))
+                })
+                .ToList();
+
         public async Task<IEnumerable<AuthorModel>> AllAuthors()
         {
             return await repo.AllReadonly<Author>()

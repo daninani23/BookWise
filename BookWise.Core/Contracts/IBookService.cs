@@ -4,6 +4,7 @@ namespace BookWise.Core.Contracts
 {
     public interface IBookService
     {
+        IEnumerable<BookServiceModel> All();
         Task<IEnumerable<BookHomeModel>> LastFourBooks();
 
         Task<IEnumerable<GenreModel>> AllGenres();

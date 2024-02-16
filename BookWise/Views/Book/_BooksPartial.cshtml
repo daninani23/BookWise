@@ -1,0 +1,43 @@
+﻿@model IEnumerable<BookServiceModel>
+
+<div class="row">
+
+    @foreach (var book in Model)
+    {
+        <div class="col-md-4">
+            <div class="box">
+                <div class="img-box">
+                    <img src="@book.ImageUrl" style="height: 400px;" alt="@book.Title">
+                    <h4 class="blog_date">
+                        <span>
+                            @book.AuthorNames
+                        </span>
+                    </h4>
+                </div>
+                <div class="detail-box">
+                    <h5 style="margin-bottom = 50px;">
+                        @book.Title
+                    </h5>
+                    <h6 class="font-italic font-weight-bold">@book.GenreNames</h6>
+                    <p>
+                        @book.Description...
+                    </p>
+
+                    @*@if (ViewBag.AllowBookEdit == true || User.IsAdmin())
+                    {
+                        <a asp-controller="Books" asp-action="Edit" asp-route-id="@book.Id">
+                            Edit
+                        </a>
+                        <a asp-controller="Books" asp-action="Delete" asp-route-id="@book.Id">
+                            Delete
+                        </a>
+                        <a asp-controller="Books" asp-action="ById" asp-route-id="@book.Id">
+                            Read More
+                        </a>
+                    }*@
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

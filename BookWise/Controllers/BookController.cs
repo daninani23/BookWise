@@ -18,16 +18,17 @@ namespace BookWise.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public IActionResult All()
         {
-            var model = new BooksQueryModel();
-            return View(model);
+            var books = this.bookService.All();
+
+            return View(books);
         }
 
         //[Authorize]
         public async Task<IActionResult> Mine()
         {
-            var model = new BooksQueryModel();
+            var model = new BookServiceModel();
             return View(model);
         }
 

@@ -35,7 +35,8 @@ namespace BookWise.Controllers
         //[Authorize]
         public async Task<IActionResult> Details(int id)
         {
-            var model = new BookDetailsModel();
+            
+            var model = await bookService.Details(id);
             return View(model);
         }
 

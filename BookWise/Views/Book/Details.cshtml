@@ -1,6 +1,34 @@
-﻿@model BookDetailsModel
+﻿@using System.Globalization;
+@model BookDetailsModel
 @{
-    ViewBag.Title = "Book Details";
+    ViewBag.Title = "Details";
 }
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr/>
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4">
+            <img class="card-img-top" style="width: 20rem;"
+                 src="@Model.ImageUrl" alt="Book Image">
+        </div>
+        <div class="card col-8 border-0">
+            <h2>
+                "@Model.Title" by <i>@string.Join(", ", Model.BookAuthors)</i>
+            </h2>
+            <a href="">
+                @Model.ReviewsCount Reviews
+            </a>
+            <a href="">
+                @Model.Rating Rating
+            </a>
+            <p>@Model.Description</p>
+            <p><b>Genres: </b>@string.Join(", ", Model.BookGenres)</p>
+            <p><b>Publisher: </b> @Model.Publisher</p>
+            <p><b>Print length: </b> @Model.NumberOfPages pages</p>
+            <p>
+                <b> First published: </b> <time>@(Model.PublicationDate.HasValue ? Model.PublicationDate.Value.ToString("MMMM dd, yyyy", new CultureInfo("en-US")) : "")</time>
+            </p>
+        </div>
+    </div>
+</div>

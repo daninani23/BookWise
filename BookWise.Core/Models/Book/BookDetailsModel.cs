@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace BookWise.Core.Models.Book
 {
-    public class BookDetailsModel
+    public class BookDetailsModel:BookServiceModel
     {
+        public int NumberOfPages { get; set; }
+
+        public DateTime? PublicationDate { get; set; }
+
+        public string Publisher { get; set; } = null!;
+
+        public int ReviewsCount { get; set; }
+        public double Rating { get; set; }
     }
 }

@@ -23,16 +23,16 @@
 
                     @*@if (ViewBag.AllowBookEdit == true || User.IsAdmin())
                     {
-                        <a asp-controller="Books" asp-action="Edit" asp-route-id="@book.Id">
+                        <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id">
                             Edit
                         </a>
-                        <a asp-controller="Books" asp-action="Delete" asp-route-id="@book.Id">
+                        <a asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id">
                             Delete
-                        </a>
-                        <a asp-controller="Books" asp-action="ById" asp-route-id="@book.Id">
-                            Read More
-                        </a>
-                    }*@
+                        </a>}
+                *@
+                    <a asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" class="btn btn-primary btn-lg"
+                   role="button">Read More</a>
+                    
                 </div>
             </div>
         </div>

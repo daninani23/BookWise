@@ -157,5 +157,25 @@ namespace BookWise.Core.Services
                                 .ThenInclude(ba => ba.Author)
                             .ToList();
         }
+
+        public async Task<BookDetailsModel> Details(int id) => await repo.AllReadonly<Book>()
+            .Where(b => b.Id == id)
+            .Select(bg => new BookDetailsModel()
+            {
+                Id = bg.Id,
+                Title = bg.Title,
+                ImageUrl = bg.ImageUrl,
+                Description= bg.Description,
+                PublicationDate= bg.PublicationDate,
+                ReviewsCount = bg.Reviews.Count(),
+                Rating = bg.Reviews.Average(r => r.Rating) == null ? 0 : bg.Reviews.Average(r => r.Rating),
+                Publisher  =bg.Publisher,
+                NumberOfPages=bg.NumberOfPages,
+                BookGenres= bg.BookGenres.Select(bt => bt.Genre.Name).ToList(),
+                BookAuthors = bg.BookAuthors.Select(bt => $"{bt.Author.FirstName} {bt.Author.LastName}").ToList()
+
+            }).FirstAsync();
+
+       
     }
 }

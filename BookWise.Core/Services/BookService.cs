@@ -3,6 +3,7 @@ using BookWise.Core.Models.Book;
 using BookWise.Infrastructure.Data.Common;
 using BookWise.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using static BookWise.Infrastructure.Data.DataConstants;
 using Author = BookWise.Infrastructure.Data.Models.Author;
 using Book = BookWise.Infrastructure.Data.Models.Book;
 using Genre = BookWise.Infrastructure.Data.Models.Genre;
@@ -64,10 +65,10 @@ namespace BookWise.Core.Services
                 .ToListAsync();
         }
 
-        //public async Task<bool> AuthorExists(int authorId)
-        //{
-        //    return await repo.AllReadonly<Author>().AnyAsync(a => a.Id == authorId);
-        //}
+        public async Task<bool> AuthorExists(int authorId)
+        {
+            return await repo.AllReadonly<Author>().AnyAsync(a => a.Id == authorId);
+        }
 
         public async Task<int> Create(BookModel model)
         {
@@ -80,7 +81,6 @@ namespace BookWise.Core.Services
                 NumberOfPages = model.NumberOfPages,
                 PublicationDate = model.PublicationDate,
                 Publisher = model.Publisher
-
             };
 
             await repo.AddAsync(book);
@@ -129,10 +129,10 @@ namespace BookWise.Core.Services
         }
 
 
-        //public async Task<bool> GenreExists(int genreId)
-        //{
-        //    return await repo.AllReadonly<Genre>().AnyAsync(g => g.Id == genreId);
-        //}
+        public async Task<bool> GenreExists(int genreId)
+        {
+            return await repo.AllReadonly<Genre>().AnyAsync(g => g.Id == genreId);
+        }
 
         public async Task<IEnumerable<BookHomeModel>> LastFourBooks()
         {
@@ -181,5 +181,74 @@ namespace BookWise.Core.Services
         {
             return await repo.AllReadonly<Book>().AnyAsync(b => b.Id ==id); 
         }
+        public async Task Edit(int bookId, BookModel model)
+        {
+
+            var book = await repo.All<Book>()
+                    .Include(b => b.BookGenres)
+                    .Include(b => b.BookAuthors)
+                    .FirstOrDefaultAsync(b => b.Id == bookId);
+
+            book.Description = model.Description;
+            book.ImageUrl = model.ImageUrl;
+            book.Title = model.Title;
+            book.Publisher = model.Publisher;
+            book.NumberOfPages = model.NumberOfPages;
+
+            if (model.SelectedGenres.Count != 0)
+            {
+                foreach (var oldGenre in book.BookGenres.ToList())
+                {
+                    book.BookGenres.Remove(oldGenre);
+                }
+
+                foreach (var genreid in model.SelectedGenres)
+                {
+                    var existingGenre = await repo.GetByIdAsync<Genre>(genreid);
+                    if (existingGenre == null)
+                    {
+                    }
+                    else
+                    {
+                        var bookGenre = new BookGenre
+                        {
+                            BookId = book.Id,
+                            GenreId = genreid
+                        };
+                        book.BookGenres.Add(bookGenre);
+
+                    }
+                }
+            }
+            if (model.SelectedAuthors.Count != 0)
+            {
+                foreach (var oldAuthor in book.BookAuthors.ToList())
+                {
+                    book.BookAuthors.Remove(oldAuthor);
+                }
+
+
+                foreach (var authorid in model.SelectedAuthors)
+                {
+                    var existingAuthor = await repo.GetByIdAsync<Author>(authorid);
+                    if (existingAuthor == null)
+                    {
+
+                    }
+                    else
+                    {
+                        var bookAuthor = new BookAuthor
+                        {
+                            BookId = book.Id,
+                            AuthorId = authorid
+                        };
+                        book.BookAuthors.Add(bookAuthor);
+                    }
+                }
+            }
+
+            await repo.SaveChangesAsync();
+        }
+
     }
 }

@@ -78,14 +78,38 @@ namespace BookWise.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = new BookModel();
-            return View();
+            if ((await bookService.BookExist(id)) == false)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            var book =await bookService.Details(id);
+           
+            return View(new BookModel 
+            {
+                Title = book.Title,
+                ImageUrl = book.ImageUrl,
+                Description = book.Description,
+                NumberOfPages = book.NumberOfPages,
+                PublicationDate = book.PublicationDate,
+                Publisher = book.Publisher,
+                Genres = (await bookService.AllGenres()).ToList(),
+                Authors = (await bookService.AllAuthors()).ToList()
+            });
         }
 
         //[Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(int id, BookModel model)
         {
+            if ((await bookService.BookExist(id)) == false)
+            {
+                ModelState.AddModelError("", "Book does not exist");
+
+                return View(model);
+            }
+
+            await bookService.Edit(id, model);
             return RedirectToAction(nameof(Details), new { id });
         }
         //[Authorize]

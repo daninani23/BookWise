@@ -113,9 +113,14 @@ namespace BookWise.Controllers
             return RedirectToAction(nameof(Details), new { id });
         }
         //[Authorize]
-        [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
+            var bookIsDeleted = await this.bookService.Delete(id);
+
+            if (!bookIsDeleted)
+            {
+                return BadRequest();
+            }
             return RedirectToAction(nameof(All));
         }
 

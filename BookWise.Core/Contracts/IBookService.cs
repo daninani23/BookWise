@@ -18,5 +18,7 @@ namespace BookWise.Core.Contracts
         Task<bool> AuthorExists(int authorId);
         Task<int> Create(BookModel model);
 
+        Task<bool> Delete(int id);
+
     }
 }

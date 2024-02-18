@@ -3,6 +3,7 @@ using BookWise.Core.Models.Book;
 using BookWise.Infrastructure.Data.Common;
 using BookWise.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using static BookWise.Infrastructure.Data.DataConstants;
 using Author = BookWise.Infrastructure.Data.Models.Author;
 using Book = BookWise.Infrastructure.Data.Models.Book;
@@ -250,5 +251,41 @@ namespace BookWise.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        public async Task<bool> Delete(int id)
+        {
+            var book = await repo.All<Book>()
+                     .Include(b => b.BookGenres)
+                     .Include(b => b.BookAuthors)
+                     .FirstOrDefaultAsync(b => b.Id == id);
+            if (book == null)
+            {
+                return false;
+            }
+
+            var bookgenres = repo.All<BookGenre>().Where(b => b.BookId == id).ToList();
+            var bookauthors = repo.All<BookAuthor>().Where(b => b.BookId == id).ToList();
+
+            if (bookgenres.Any())
+            {
+                foreach (var genre in bookgenres)
+                {
+                    repo.Delete(genre);
+
+                }
+            }
+            if (bookauthors.Any())
+            {
+                foreach (var author in bookauthors)
+                {
+                    repo.Delete(author);
+                }
+            }
+
+            repo.Delete(book);
+            await repo.SaveChangesAsync();
+
+            return true;
+
+        }
     }
 }

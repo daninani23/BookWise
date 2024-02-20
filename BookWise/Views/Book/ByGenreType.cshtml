@@ -1,0 +1,38 @@
+﻿@model IEnumerable<BookServiceModel>
+@{
+    var genre = @Model.Select(b => b.BookGenres).FirstOrDefault();
+    if (genre == null)
+    {
+        ViewData["Title"] = "Empty Genre";
+
+    }
+    else
+    {
+        ViewData["Title"] = genre;
+    }
+
+}
+
+<section class="blog_section layout_padding">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>
+            </h2>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div>
+                <h4 class="text-center">There are no books in this genre.</h4>
+            </div>
+            <div class="text-center">
+                <a asp-controller="Book" asp-action="Add">
+                    Add Book
+                </a>
+            </div>
+        }
+
+        <partial name="_BooksPartial" model="@Model" />
+    </div>
+</section>
+

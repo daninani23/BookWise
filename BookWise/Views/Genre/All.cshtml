@@ -1,0 +1,103 @@
+﻿﻿@{
+    ViewData["Title"] = "Genres";
+}
+
+<section class="catagory_section layout_padding">
+    <div class="catagory_container">
+        <div class="container ">
+            <div class="heading_container heading_center">
+                <h2>
+                    Book Genres
+                </h2>
+                <p>
+                    Unsure what to read? Don't worry! We've summarized every genre just for you. Explore and discover your next favorite book!
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-4 ">
+                    <div class="box ">
+                        <div class="img-box">
+                            <img src="~/images/love.png" alt="">
+                        </div>
+                        <div class="detail-box">
+                            <h5>
+                                <a asp-controller="Book" asp-action="ByGenreType" asp-route-genre="Romance" class="btn btn-primary">
+                                    Romance
+                                </a>
+                            </h5>
+                            <p>
+                                Dive into the enchanting world of romance, where each page brims with tales of love, passion, and heartfelt connections. Experience the enduring allure of timeless romances and the exploration of deep emotions that resonate with every reader's heart.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 ">
+                    <div class="box ">
+                        <div class="img-box">
+                            <img src="~/images/horror.png" alt="">
+                        </div>
+                        <div class="detail-box">
+                            <h5>
+                                <a asp-controller="Book" asp-action="ByGenreType" asp-route-genre="Horror" class="btn btn-primary">
+                                    Horror
+                                </a>
+                            </h5>
+                            <p>
+                                Enter a realm of terror and suspense with our horror selection. From spine-tingling ghost stories to heart-pounding thrillers, these tales will leave you checking under your bed long after the lights go out.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 ">
+                    <div class="box ">
+                        <div class="img-box">
+                            <img src="~/images/biography.png" alt="">
+                        </div>
+                        <div class="detail-box">
+                            <h5>
+                                <a asp-controller="Book" asp-action="ByGenreType" asp-route-genre="Biography" class="btn btn-primary">
+                                    Biography
+                                </a>
+                            </h5>
+                            <p>
+                                Gain intimate glimpses into the lives of remarkable individuals, whose triumphs, struggles, and triumphs will inspire and resonate with readers of all walks of life.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 ">
+                    <div class="box ">
+                        <div class="img-box">
+                            <img src="~/images/classic.png" alt="">
+                        </div>
+                        <div class="detail-box">
+                            <h5>
+                                <a asp-controller="Book" asp-action="ByGenreType" asp-route-genre="Classic" class="btn btn-primary">
+                                    Classic
+                                </a>
+                            </h5>
+                            <p>
+                                Enter the timeless realm of classics, where each page echoes generations past. From iconic tales of love and tragedy to profound reflections on humanity, our collection invites you to discover literature's enduring beauty and wisdom.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 ">
+                    <div class="box ">
+                        <div class="img-box">
+                            <img src="~/images/fantasy.png" alt="">
+                        </div>
+                        <div class="detail-box">
+                            <h5>
+                                <a asp-controller="Book" asp-action="ByGenreType" asp-route-genre="Fantasy" class="btn btn-primary">
+                                    Fantasy
+                                </a>
+                            </h5>
+                            <p>
+                                Enter enchanting realms filled with magic, mythical creatures, and epic quests that will transport you to worlds beyond your wildest dreams.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

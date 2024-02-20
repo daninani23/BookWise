@@ -2,7 +2,7 @@
 
 namespace BookWise.Models
 {
-    public class LoginViewModel
+    public class LoginModel
     {
         [Required]
         public string UserName { get; set; } = null!;

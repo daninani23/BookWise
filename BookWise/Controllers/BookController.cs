@@ -16,6 +16,13 @@ namespace BookWise.Controllers
         {
             bookService = _bookService;
         }
+        [Route("Book/ByGenreType/{genre}")]
+        public IActionResult ByGenreType(string genre)
+        {
+            var booksByGenre = this.bookService.ByGenreType(genre);
+
+            return View(booksByGenre);
+        }
 
         [AllowAnonymous]
         public IActionResult All()
@@ -123,9 +130,8 @@ namespace BookWise.Controllers
             }
             return RedirectToAction(nameof(All));
         }
-
-    } 
-
+    }
+  
 }
     
 

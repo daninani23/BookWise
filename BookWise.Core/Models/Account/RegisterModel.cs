@@ -2,7 +2,7 @@
 
 namespace BookWise.Models
 {
-    public class RegisterViewModel
+    public class RegisterModel
     {
         [Required]
         [StringLength(20, MinimumLength = 5)]

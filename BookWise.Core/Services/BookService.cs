@@ -20,6 +20,10 @@ namespace BookWise.Core.Services
             repo = _repo;
         }
 
+        public IEnumerable<BookServiceModel> ByGenreType(string genre)
+   => GetBooks(this.repo
+       .All<Book>()
+       .Where(b => b.BookGenres.Any(bg => bg.Genre.Name == genre)));
         public IEnumerable<BookServiceModel> All()
         {
             return GetBooks(repo.All<Book>().OrderByDescending(x => x.Title));

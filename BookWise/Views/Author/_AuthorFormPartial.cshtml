@@ -1,0 +1,44 @@
+﻿@using BookWise.Core.Models.Author;
+@model AuthorDetailsModel
+
+<h2 class="text-center">@ViewBag.Title</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="FirstName" class="control-label">FirstName:</label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName" class="control-label">LastName:</label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageUrl" class="control-label">Image URL:</label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BirthDate" class="control-label">Birth Date:</label>
+        <input asp-for="BirthDate" class="form-control" type="date" />
+        <span asp-validation-for="BirthDate" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label asp-for="SelectedBooks" class="control-label">Books:</label>
+        @foreach (var book in Model.Books)
+        {
+            <br />
+            <label class="checkbox-inline">
+                <input type="checkbox" name="SelectedBooks" value="@book.Id" />@book.Title
+            </label>
+        }
+        <span asp-validation-for="SelectedBooks" class="small text-danger"></span>
+    </div>
+    <br />
+
+    <div class="btn-box">
+        <input class="input-button" type="submit" value="@ViewBag.Button" />
+    </div>
+</form>

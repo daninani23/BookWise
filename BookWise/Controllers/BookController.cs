@@ -4,6 +4,7 @@ using BookWise.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Versioning;
 
 namespace BookWise.Controllers
 {
@@ -30,13 +31,6 @@ namespace BookWise.Controllers
             var books = bookService.All();
 
             return View(books);
-        }
-
-        //[Authorize]
-        public async Task<IActionResult> Mine()
-        {
-            var model = new BookServiceModel();
-            return View(model);
         }
 
         //[Authorize]
@@ -119,8 +113,26 @@ namespace BookWise.Controllers
             await bookService.Edit(id, model);
             return RedirectToAction(nameof(Details), new { id });
         }
-        //[Authorize]
+
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
+        {
+           
+            var book = await bookService.Details(id);
+            var model = new BookDetailsModel
+            {
+                Title = book.Title,
+                ImageUrl = book.ImageUrl,
+                Description = book.Description,
+                BookAuthors = book.BookAuthors.ToList(),
+                BookGenres=book.BookGenres.ToList(),
+            };
+
+            return View(model);
+        }
+        //[Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, BookDetailsModel model)
         {
             var bookIsDeleted = await this.bookService.Delete(id);
 

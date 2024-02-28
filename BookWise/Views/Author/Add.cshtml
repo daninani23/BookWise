@@ -1,0 +1,13 @@
+﻿@using BookWise.Core.Models.Author;
+@model AuthorDetailsModel
+
+@{
+    ViewData["Title"] = "Add Author";
+    ViewBag.Button = "Add";
+}
+
+<partial name="_AuthorFormPartial" model="@Model" />
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

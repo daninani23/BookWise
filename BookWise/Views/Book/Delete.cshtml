@@ -1,1 +1,28 @@
-﻿@model BookDetailsModel
+﻿@using System.Globalization;
+@model BookDetailsModel
+
+@{
+    ViewBag.Title = "Delete Book";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<form asp-action="Delete">
+    <div class="row">
+        <div class="col-4">
+            <img class="card-img-top" style="width: 20rem;"
+                 src="@Model.ImageUrl" alt="Book Image">
+        </div>
+        <div class="card col-8 border-0">
+            <h2>
+                "@Model.Title" by <i>@string.Join(", ", Model.BookAuthors)</i>
+            </h2>
+            <p>@Model.Description</p>
+            <p><b>Genres: </b>@string.Join(", ", Model.BookGenres)</p>
+            <div class="form-group">
+                <input type="submit" value="Delete" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>

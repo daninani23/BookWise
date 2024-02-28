@@ -1,0 +1,12 @@
+﻿@using BookWise.Core.Models.Author;
+@model AuthorDetailsModel
+@{
+    ViewBag.Title = "Edit Author";
+    ViewBag.Button = "Edit";
+}
+
+<partial name="_AuthorFormPartial" model="@Model" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

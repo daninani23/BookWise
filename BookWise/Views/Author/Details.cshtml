@@ -1,0 +1,35 @@
+﻿@using System.Globalization;
+@using BookWise.Core.Models.Author;
+@model AuthorDetailsModel
+@{
+    ViewBag.Title = "Details";
+}
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="container" style="display:inline">
+    <div class="row">
+        <div class="col-4">
+            <img class="card-img-top" style="width: 20rem;"
+                 src="@Model.ImageUrl" alt="Author Image">
+        </div>
+        <div class="card col-8 border-0">
+            <h2>
+                <i>@Model.FirstName @Model.LastName</i>
+            </h2>
+            <p>
+                <b> Birth Date: </b> <time>@(Model.BirthDate.HasValue ? Model.BirthDate.Value.ToString("MMMM dd, yyyy", new CultureInfo("en-US")) : "")</time>
+            </p>
+            <h2>Books:</h2>
+        <ul>
+                @foreach (var book in Model.Books)
+                {
+                    <li>
+                        <a href="@Url.Action("Details", "Book", new { id = book.Id })">@book.Title</a>
+                    </li>
+                }
+        </ul>
+        </div>
+        
+    </div>
+</div>

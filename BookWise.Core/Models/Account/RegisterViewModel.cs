@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+using static BookWise.Infrastructure.Data.DataConstants.User;
 
-namespace BookWise.Models
+namespace BookWise.Models.Account
 {
-    public class RegisterModel
+    public class RegisterViewModel
     {
         [Required]
         [StringLength(20, MinimumLength = 5)]
@@ -22,5 +24,14 @@ namespace BookWise.Models
         [Compare(nameof(Password))]
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; } = null!;
+
+
+        [Required(ErrorMessage = "First name field is required.")]
+        [Range(MinName, MaxName, ErrorMessage = "First name should be between {1} and {2} characters long.")]
+        public string FirstName { get; set; } = null!;
+
+        [Required(ErrorMessage = "Last name field is required.")]
+        [Range(MinName, MaxName, ErrorMessage = "Last name should be between {1} and {2} characters long.")]
+        public string LastName { get; set; } = null!;
     }
 }

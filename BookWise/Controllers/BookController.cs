@@ -8,7 +8,7 @@ using NuGet.Versioning;
 
 namespace BookWise.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class BookController : Controller
     {
         private readonly IBookService bookService;
@@ -17,6 +17,7 @@ namespace BookWise.Controllers
         {
             bookService = _bookService;
         }
+
         [Route("Book/ByGenreType/{genre}")]
         public IActionResult ByGenreType(string genre)
         {

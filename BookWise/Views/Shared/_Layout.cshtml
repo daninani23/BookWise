@@ -25,14 +25,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="All">All Authors</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="Add">Add Authors</a>
-                        </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Add">Add Books</a>
-                            </li>
                         @if (this.User?.Identity !=null && this.User.Identity.IsAuthenticated)
                         {
+                           <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Add">Add Books</a>
+                           </li>
+                           <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="Add">Add Authors</a>
+                           </li>
                         }
                     </ul>
                     <partial name="_LoginPartial" />

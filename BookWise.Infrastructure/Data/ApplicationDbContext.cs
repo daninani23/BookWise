@@ -38,6 +38,7 @@ namespace BookWise.Infrastructure.Data
             builder.ApplyConfiguration(new ReviewConfiguration());
             builder.ApplyConfiguration(new BookAuthorConfiguration());
             builder.ApplyConfiguration(new BookGenreConfiguration());
+            builder.ApplyConfiguration(new IdentityRolesConfiguration());
 
             base.OnModelCreating(builder);
         }

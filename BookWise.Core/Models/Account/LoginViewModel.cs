@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BookWise.Models
+namespace BookWise.Models.Account
 {
-    public class LoginModel
+    public class LoginViewModel
     {
         [Required]
-        public string UserName { get; set; } = null!;
+        public string Username { get; set; } = null!;
 
         [Required]
         [DataType(DataType.Password)]

@@ -20,6 +20,7 @@
             <p>
                 <b> Birth Date: </b> <time>@(Model.BirthDate.HasValue ? Model.BirthDate.Value.ToString("MMMM dd, yyyy", new CultureInfo("en-US")) : "")</time>
             </p>
+            <p>@Model.Description</p>
             <h2>Books:</h2>
         <ul>
                 @foreach (var book in Model.Books)

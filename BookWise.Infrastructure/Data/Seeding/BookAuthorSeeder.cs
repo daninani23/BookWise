@@ -1,24 +1,22 @@
-﻿using BookWise.Infrastructure.Data.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using BookWise.Infrastructure.Data;
+using BookWise.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace BookWise.Infrastructure.Data.Configuration
+namespace BookWise.Data.Seeding
 {
-    internal class BookAuthorConfiguration : IEntityTypeConfiguration<BookAuthor>
+    public class BookAuthorSeeder : ISeeder
     {
-        public void Configure(EntityTypeBuilder<BookAuthor> builder)
+        public async Task SeedAsync(IServiceScope serviceScope)
         {
-            builder.HasData(CreateBookAuthors());
-        }
+            var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        private List<BookAuthor> CreateBookAuthors()
-        {
-            List<BookAuthor> bookauthors = new List<BookAuthor>()
+            if (await dbContext.BookAuthors.AnyAsync())
+            {
+                return;
+            }
+
+            var bookauthors = new List<BookAuthor>()
             {
                 new BookAuthor()
                 {
@@ -55,10 +53,15 @@ namespace BookWise.Infrastructure.Data.Configuration
                     BookId=6,
                     AuthorId=2,
                 },
-
+                new BookAuthor()
+                { 
+                    BookId=7,
+                    AuthorId=7,
+                }
             };
 
-            return bookauthors;
+            await dbContext.BookAuthors.AddRangeAsync(bookauthors);
+            await dbContext.SaveChangesAsync();
         }
     }
-}
+}    

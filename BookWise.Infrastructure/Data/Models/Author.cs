@@ -23,6 +23,9 @@ namespace BookWise.Infrastructure.Data.Models
 
         public string ImageUrl { get; set; } = null!;
 
+        [Required, MaxLength(DescriptionMaxLength)]
+        public string Description { get; set; } = null!;
+
         public DateTime? BirthDate { get; set; }
 
         public List<BookAuthor> BookAuthors { get; set; } = new List<BookAuthor>();

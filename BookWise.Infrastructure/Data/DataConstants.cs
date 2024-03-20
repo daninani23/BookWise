@@ -32,6 +32,8 @@ namespace BookWise.Infrastructure.Data
         {
             public const int MaxName = 40;
             public const int MinName = 3;
+            public const int DescriptionMaxLength = 1500;
+            public const int DescriptionMinLength = 200;
         }
 
         public class Genre
@@ -44,6 +46,13 @@ namespace BookWise.Infrastructure.Data
         {
             public const int MaxName = 40;
             public const int MinName = 3;
+        }
+
+        public class Role 
+        {
+            public const string AdministratorRoleName = "Administrator";
+
+            public const string UserRoleName = "User";
         }
     }
 }

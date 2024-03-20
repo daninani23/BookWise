@@ -29,7 +29,6 @@ namespace BookWise.Controllers
         public async Task<IActionResult> Add()
         {
 
-
             var model = new AuthorDetailsModel()
             {
                 Books = (await authorService.AllBooks()).ToList(),
@@ -87,6 +86,7 @@ namespace BookWise.Controllers
                 LastName = author.LastName,
                 ImageUrl = author.ImageUrl,
                 BirthDate = author.BirthDate,
+                Description=author.Description,
                 Books=(await authorService.AllBooks()).ToList()
             });
         }

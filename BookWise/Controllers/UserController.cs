@@ -1,26 +1,26 @@
-﻿using BookWise.Infrastructure.Data.Models;
+﻿using BookWise.Data.Models;
 using BookWise.Models.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
+using static BookWise.Data.Seeding.GlobalConstants;
+
 namespace BookWise.Controllers
 {
     public class UserController : Controller
     {
-        private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
 
         public UserController(
-            UserManager<User> _userManager,
-            SignInManager<User> _signInManager,
-            RoleManager<IdentityRole> _roleManager)
+            UserManager<ApplicationUser> _userManager,
+            SignInManager<ApplicationUser> _signInManager
+            )
         {
             userManager = _userManager;
             signInManager = _signInManager;
-            roleManager = _roleManager;
         }
 
         [HttpGet]
@@ -29,7 +29,7 @@ namespace BookWise.Controllers
         {
             if (User?.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction("All", "Book");
+                return RedirectToAction("Index", "Home");
             }
 
             var model = new RegisterViewModel();
@@ -43,7 +43,7 @@ namespace BookWise.Controllers
         {
             if (User?.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction("All", "Book");
+                return RedirectToAction("Index", "Home");
             }
 
             if (!ModelState.IsValid)
@@ -51,12 +51,12 @@ namespace BookWise.Controllers
                 return View(model);
             }
 
-            var user = new User()
+            var user = new ApplicationUser()
             {
                 Email = model.Email,
                 UserName = model.UserName,
-                FirstName= model.FirstName,
-                LastName= model.LastName,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
@@ -64,9 +64,10 @@ namespace BookWise.Controllers
 
             if (result.Succeeded)
             {
-                ///check here
-                await userManager.AddToRoleAsync(user, "User");
-                return RedirectToAction("Login", "User");
+                await userManager.AddToRoleAsync(user, UserRoleName);
+                await this.signInManager.SignInAsync(user, false);
+                return this.RedirectToAction("Index", "Home");
+
             }
 
             foreach (var item in result.Errors)
@@ -107,7 +108,7 @@ namespace BookWise.Controllers
                 if (result.Succeeded)
                 {
 
-                    return RedirectToAction("All", "Book");
+                    return RedirectToAction("Index", "Home");
                 }
             }
 

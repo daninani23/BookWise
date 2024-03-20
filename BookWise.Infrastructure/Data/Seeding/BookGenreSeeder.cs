@@ -1,24 +1,22 @@
-﻿using BookWise.Infrastructure.Data.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using BookWise.Infrastructure.Data;
+using BookWise.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace BookWise.Infrastructure.Data.Configuration
+namespace BookWise.Data.Seeding
 {
-    internal class BookGenreConfiguration : IEntityTypeConfiguration<BookGenre>
+    public class BookGenreSeeder:ISeeder
     {
-        public void Configure(EntityTypeBuilder<BookGenre> builder)
+        public async Task SeedAsync(IServiceScope serviceScope)
         {
-            builder.HasData(CreateBookGenres());
-        }
+            var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-        private List<BookGenre> CreateBookGenres()
-        {
-            List<BookGenre> bookGenres = new List<BookGenre>()
+            if (await dbContext.BookGenres.AnyAsync())
+            {
+                return;
+            }
+
+            var bookgenres = new List<BookGenre>()
             {
                 new BookGenre()
                 {
@@ -59,10 +57,16 @@ namespace BookWise.Infrastructure.Data.Configuration
                 {
                     BookId=6,
                     GenreId=2,
+                },
+                new BookGenre()
+                { 
+                    BookId=7,
+                    GenreId=6
                 }
             };
 
-            return bookGenres;
+            await dbContext.BookGenres.AddRangeAsync(bookgenres);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

@@ -32,6 +32,7 @@ namespace BookWise.Core.Services
                    FirstName= b.FirstName,
                    LastName= b.LastName,
                    ImageUrl = b.ImageUrl,
+                   Description= b.Description,
                 }).ToList();
 
             return books;
@@ -45,6 +46,7 @@ namespace BookWise.Core.Services
                 LastName = model.LastName,
                 ImageUrl = model.ImageUrl,
                 BirthDate = model.BirthDate,
+                Description= model.Description,
             };
 
             await repo.AddAsync(author);
@@ -80,6 +82,7 @@ namespace BookWise.Core.Services
                 LastName= bg.LastName,
                 BirthDate= bg.BirthDate,
                 ImageUrl= bg.ImageUrl,
+                Description= bg.Description,
             }).FirstAsync();
 
        
@@ -100,6 +103,7 @@ namespace BookWise.Core.Services
             author.FirstName= model.FirstName;
             author.LastName= model.LastName;
             author.BirthDate=model.BirthDate;
+            author.Description= model.Description;
 
             await repo.SaveChangesAsync();
         }

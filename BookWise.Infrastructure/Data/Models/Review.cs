@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static BookWise.Infrastructure.Data.DataConstants.Review;
 using System.Xml.Linq;
+using BookWise.Data.Models;
 
 namespace BookWise.Infrastructure.Data.Models
 {
@@ -26,7 +27,7 @@ namespace BookWise.Infrastructure.Data.Models
         public string UserId { get; set; } = null!;
 
         [ForeignKey(nameof(UserId))]
-        public User User { get; set; } = null!;
+        public ApplicationUser User { get; set; } = null!;
 
         [Required]
         public int BookId { get; set; }

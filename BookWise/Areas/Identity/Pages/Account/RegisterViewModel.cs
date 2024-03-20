@@ -25,13 +25,13 @@ namespace BookWise.Models.Account
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; } = null!;
 
-
         [Required(ErrorMessage = "First name field is required.")]
-        [Range(MinName, MaxName, ErrorMessage = "First name should be between {1} and {2} characters long.")]
+        [StringLength(MaxName, MinimumLength = MinName, ErrorMessage = "First name should be between {2} and {1} characters long.")]
         public string FirstName { get; set; } = null!;
 
         [Required(ErrorMessage = "Last name field is required.")]
-        [Range(MinName, MaxName, ErrorMessage = "Last name should be between {1} and {2} characters long.")]
+        [StringLength(MaxName, MinimumLength = MinName, ErrorMessage = "Last name should be between {2} and {1} characters long.")]
         public string LastName { get; set; } = null!;
+
     }
 }

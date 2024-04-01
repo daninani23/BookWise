@@ -20,6 +20,7 @@ namespace BookWise.Core.Contracts
         Task<int> Create(BookModel model);
 
         Task<bool> Delete(int id);
+        Task<List<AuthorModel>> GetAuthorsByBook(int bookId);
 
     }
 }

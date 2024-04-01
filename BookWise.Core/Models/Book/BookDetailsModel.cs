@@ -16,5 +16,8 @@ namespace BookWise.Core.Models.Book
 
         public int ReviewsCount { get; set; }
         public double Rating { get; set; }
+        //new
+        public List<AuthorModel> Authors { get; set; } = new List<AuthorModel>();
+
     }
 }

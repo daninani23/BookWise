@@ -1,6 +1,7 @@
 ﻿using BookWise.Data;
 using BookWise.Data.Models;
 using BookWise.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,7 +27,7 @@ namespace BookWise
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options =>
+            services.AddIdentity<ApplicationUser,ApplicationRole>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
@@ -34,7 +35,8 @@ namespace BookWise
                 //options.Password.RequiredLength = PASSWORD_MIN_LENGTH;
             })
             .AddRoles<ApplicationRole>()
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
             services.AddControllersWithViews();
             services.AddApplicationServices();
@@ -44,6 +46,12 @@ namespace BookWise
             services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/User/Login";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
             //RegisterServices(services);
@@ -87,7 +95,7 @@ namespace BookWise
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                //endpoints.MapRazorPages();
             });
 
 

@@ -14,10 +14,12 @@
         </p>
         <hr class="my-4">
         <p class="lead">
-            @if (this.User.Identity.IsAuthenticated && this.User?.Identity!=null)
-        {
-                <a asp-controller="Book" asp-action="Add" class="btn btn-primary btn-lg"
+
+            @if (User.IsInRole("Administrator"))
+            {
+                 <a asp-controller="Book" asp-action="Add" class="btn btn-primary btn-lg"
            role="button">Add Book</a>
+            }
             }
         </p>
     </div>
@@ -52,7 +54,9 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-<div class="container mt-4">
+@if (User.IsInRole("Administrator") || User.IsInRole("User"))
+{
+   <div class="container mt-4">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <p>
@@ -65,6 +69,7 @@
 <div class="text-center mt-4">
     <a asp-controller="Genre" asp-action="All" class="btn btn-primary">All Genres</a>
 </div>
+}
 
 
 

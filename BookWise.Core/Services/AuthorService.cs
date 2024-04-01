@@ -122,14 +122,14 @@ namespace BookWise.Core.Services
 
         public async Task<List<BookHomeModel>> GetBooksByAuthor(int authorId)
         {
-            var booksByAuthor = await repo.AllReadonly<Book>()
-                .Where(b => b.BookAuthors.All(a=>a.AuthorId== authorId))
-                .Select(b => new BookHomeModel
-                {
-                    Id = b.Id,
-                    Title = b.Title,
-                })
-                .ToListAsync();
+            var booksByAuthor = await repo.All<Book>()
+       .Where(b => b.BookAuthors.Any(a => a.AuthorId == authorId))
+       .Select(b => new BookHomeModel
+       {
+           Id = b.Id,
+           Title = b.Title,
+       })
+       .ToListAsync();
 
             return booksByAuthor;
         }

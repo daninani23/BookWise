@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using BookWise.Data.Models;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,19 +23,17 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="All">All Books</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="All">Books</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="All">All Authors</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="All">Authors</a>
                         </li>
-                        @if (this.User?.Identity !=null && this.User.Identity.IsAuthenticated)
+                        
+                        @if (User.IsInRole("Administrator") || User.IsInRole("User"))
                         {
-                           <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Add">Add Books</a>
-                           </li>
-                           <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="Add">Add Authors</a>
-                           </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Genre" asp-action="All">Genres</a>
+                            </li>
                         }
                     </ul>
                     <partial name="_LoginPartial" />

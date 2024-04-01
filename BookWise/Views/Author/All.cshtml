@@ -1,24 +1,33 @@
 ﻿@using BookWise.Core.Models.Author;
 @model IEnumerable<AuthorServiceModel>
 @{
-    ViewBag.Title = "All Authors";
+    ViewBag.Title = "Authors";
 }
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
 <section class="blog_section layout_padding">
     <div class="container">
-
+        @if (User.IsInRole("Administrator"))
+        {
+            <div class="text-center mt-4">
+            <a asp-controller="Author" asp-action="Add" class="btn btn-primary">Add new author</a>
+           </div>
+        }
+        <br />
         @if (!Model.Any())
         {
             <div>
                 <h4 class="text-center">There are no authors available.</h4>
             </div>
-            <div class="text-center">
+            @if (User.IsInRole("Administrator"))
+            {
+                <div class="text-center">
                 <a asp-controller="Author" asp-action="Add">
                     Add Author
                 </a>
             </div>
+            }
         }
         <partial name="_AuthorsPartial" model="@Model" />
     </div>

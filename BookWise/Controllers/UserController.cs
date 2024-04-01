@@ -3,7 +3,7 @@ using BookWise.Models.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Security.Claims;
 using static BookWise.Data.Seeding.GlobalConstants;
 
 namespace BookWise.Controllers

@@ -77,7 +77,6 @@ namespace BookWise.Core.Services
 
         public async Task<int> Create(BookModel model)
         {
-
             var book = new Book()
             {
                 Title = model.Title,
@@ -178,7 +177,7 @@ namespace BookWise.Core.Services
                 Publisher = bg.Publisher,
                 NumberOfPages = bg.NumberOfPages,
                 BookGenres = bg.BookGenres.Select(bt => bt.Genre.Name).ToList(),
-                BookAuthors = bg.BookAuthors.Select(bt => $"{bt.Author.FirstName} {bt.Author.LastName}").ToList()
+                BookAuthors = bg.BookAuthors.Select(bt => $"{bt.Author.FirstName} {bt.Author.LastName}").ToList(),
 
             }).FirstAsync();
 
@@ -290,6 +289,21 @@ namespace BookWise.Core.Services
 
             return true;
 
+        }
+
+        public async Task<List<AuthorModel>> GetAuthorsByBook(int bookId)
+        {
+            var authorsByBook = await repo.AllReadonly<Author>()
+                .Where(b => b.BookAuthors.Any(a => a.BookId == bookId))
+                .Select(b => new AuthorModel
+                {
+                    Id = b.Id,
+                    FirstName = b.FirstName,
+                    LastName=b.LastName
+                })
+                .ToListAsync();
+
+            return authorsByBook;
         }
     }
 }

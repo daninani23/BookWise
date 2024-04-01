@@ -2,11 +2,13 @@
 using BookWise.Core.Models.Author;
 using BookWise.Core.Models.Book;
 using BookWise.Core.Services;
+using BookWise.Data.Seeding;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookWise.Controllers
 {
+    
     public class AuthorController : Controller
     {
         private readonly IAuthorService authorService;
@@ -24,8 +26,9 @@ namespace BookWise.Controllers
             return View(authors);
         }
 
-        //[Authorize]
+
         [HttpGet]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Add()
         {
 
@@ -36,8 +39,9 @@ namespace BookWise.Controllers
 
             return View(model);
         }
-        //[Authorize]
+ 
         [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Add(AuthorDetailsModel model)
         {
             if (!ModelState.IsValid)
@@ -55,7 +59,7 @@ namespace BookWise.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize(Roles = GlobalConstants.UserRoleName + "," + GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Details(int id)
         {
             if ((await authorService.AuthorExists(id)) == false)
@@ -69,8 +73,9 @@ namespace BookWise.Controllers
             return View(model);
         }
 
-        //[Authorize]
+        
         [HttpGet]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(int id)
         {
             if ((await authorService.AuthorExists(id)) == false)
@@ -91,8 +96,9 @@ namespace BookWise.Controllers
             });
         }
 
-        //[Authorize]
+      
         [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(int id, AuthorDetailsModel model)
         {
             if ((await authorService.AuthorExists(id)) == false)

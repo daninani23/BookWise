@@ -1,5 +1,7 @@
 ﻿using BookWise.Core.Contracts;
 using BookWise.Core.Models.Book;
+using BookWise.Core.Services;
+using BookWise.Data.Seeding;
 using BookWise.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +10,7 @@ using NuGet.Versioning;
 
 namespace BookWise.Controllers
 {
-    [Authorize]
+    
     public class BookController : Controller
     {
         private readonly IBookService bookService;
@@ -34,20 +36,20 @@ namespace BookWise.Controllers
             return View(books);
         }
 
-        //[Authorize]
+        [Authorize(Roles = GlobalConstants.UserRoleName + "," + GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Details(int id)
         {
             if ((await bookService.BookExist(id)) == false)
             {
                 return RedirectToAction(nameof(All));
             }
-
             var model = await bookService.Details(id);
+            model.Authors = await bookService.GetAuthorsByBook(id);
             return View(model);
         }
 
-        //[Authorize]
         [HttpGet]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Add()
         {
             var model = new BookModel()
@@ -57,8 +59,9 @@ namespace BookWise.Controllers
             };
             return View(model);
         }
-        //[Authorize]
+        
         [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Add(BookModel model)
         {
             if (!ModelState.IsValid) 
@@ -76,8 +79,9 @@ namespace BookWise.Controllers
             }
         }
 
-        //[Authorize]
+        
         [HttpGet]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(int id)
         {
             if ((await bookService.BookExist(id)) == false)
@@ -100,8 +104,9 @@ namespace BookWise.Controllers
             });
         }
 
-        //[Authorize]
+
         [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(int id, BookModel model)
         {
             if ((await bookService.BookExist(id)) == false)
@@ -114,8 +119,9 @@ namespace BookWise.Controllers
             await bookService.Edit(id, model);
             return RedirectToAction(nameof(Details), new { id });
         }
-
+ 
         [HttpGet]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(int id)
         {
            
@@ -131,8 +137,9 @@ namespace BookWise.Controllers
 
             return View(model);
         }
-        //[Authorize]
+
         [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(int id, BookDetailsModel model)
         {
             var bookIsDeleted = await this.bookService.Delete(id);

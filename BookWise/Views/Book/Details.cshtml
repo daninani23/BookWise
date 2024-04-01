@@ -1,7 +1,9 @@
 ﻿@using System.Globalization;
 @model BookDetailsModel
 @{
-    ViewBag.Title = "Details";
+    
+    ViewBag.Title = $"{Model.Title}";
+
 }
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr/>
@@ -13,8 +15,16 @@
                  src="@Model.ImageUrl" alt="Book Image">
         </div>
         <div class="card col-8 border-0">
-            <h2>
-                "@Model.Title" by <i>@string.Join(", ", Model.BookAuthors)</i>
+            <h2> by <i>
+                    @foreach (var author in Model.Authors)
+                    {
+                        <a href="@Url.Action("Details", "Author", new { id = author.Id})"style="text-decoration: none;">@author.FirstName @author.LastName </a>
+                        if (author != Model.Authors.Last())
+                        {
+                            <text>, </text>
+                        }
+                    }
+                    </i>
             </h2>
             <a href="">
                 @Model.ReviewsCount Reviews
@@ -30,5 +40,13 @@
                 <b> First published: </b> <time>@(Model.PublicationDate.HasValue ? Model.PublicationDate.Value.ToString("MMMM dd, yyyy", new CultureInfo("en-US")) : "")</time>
             </p>
         </div>
+            <hr />
+       
+            <h1>Rating and Reviews</h1>
+            <h3>What do <i>you</i> think ?</h3>
+            <p>
+                <a asp-action="Add" asp-controller="Review" asp-route-bookid="@Model.Id">Write a Review</a>
+            </p>
+       
     </div>
 </div>

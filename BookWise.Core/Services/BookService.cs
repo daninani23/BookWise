@@ -1,14 +1,14 @@
 ﻿using BookWise.Core.Contracts;
 using BookWise.Core.Models.Book;
+using BookWise.Core.Models.Review;
 using BookWise.Infrastructure.Data.Common;
 using BookWise.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
-using System.Text.RegularExpressions;
 using static BookWise.Infrastructure.Data.DataConstants;
 using Author = BookWise.Infrastructure.Data.Models.Author;
 using Book = BookWise.Infrastructure.Data.Models.Book;
 using Genre = BookWise.Infrastructure.Data.Models.Genre;
+using Review = BookWise.Infrastructure.Data.Models.Review;
 
 namespace BookWise.Core.Services
 {
@@ -164,6 +164,7 @@ namespace BookWise.Core.Services
         }
 
 
+
         public async Task<BookDetailsModel> Details(int id) => await repo.AllReadonly<Book>()
             .Where(b => b.Id == id)
             .Select(bg => new BookDetailsModel()
@@ -305,6 +306,22 @@ namespace BookWise.Core.Services
                 .ToListAsync();
 
             return authorsByBook;
+        }
+
+        public async Task<List<ReviewViewModel>> GetReviewsByBook(int bookId)
+        {
+            var reviewsByBook = await repo.AllReadonly<Review>()
+                .Where(a => a.BookId == bookId)
+                .Select(b => new ReviewViewModel
+                {
+                    BookId= b.BookId,
+                    Rating=b.Rating,
+                    User= b.User,
+                    ReviewText= b.ReviewText
+                })
+                .ToListAsync();
+
+            return reviewsByBook;
         }
 
         public async Task<BookQueryServiceModel> AllF(string? genre = null, string? searchTerm = null, int currentPage = 1, int boksPerPage = 1)

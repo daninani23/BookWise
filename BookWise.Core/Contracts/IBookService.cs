@@ -1,4 +1,5 @@
 ﻿using BookWise.Core.Models.Book;
+using BookWise.Core.Models.Review;
 
 namespace BookWise.Core.Contracts
 {
@@ -21,6 +22,7 @@ namespace BookWise.Core.Contracts
 
         Task<bool> Delete(int id);
         Task<List<AuthorModel>> GetAuthorsByBook(int bookId);
+        Task<List<ReviewViewModel>> GetReviewsByBook(int bookId);
 
         Task<BookQueryServiceModel> AllF(
             string? genre=null,
@@ -29,6 +31,7 @@ namespace BookWise.Core.Contracts
             int boksPerPage=1);
 
         Task<IEnumerable<string>> AllGenresNames();
+
 
     }
 }

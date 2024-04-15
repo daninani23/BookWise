@@ -1,16 +1,12 @@
 ﻿using BookWise.Core.Contracts;
 using BookWise.Core.Models.Book;
-using BookWise.Core.Services;
 using BookWise.Data.Seeding;
-using BookWise.Infrastructure.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NuGet.Versioning;
 
 namespace BookWise.Controllers
 {
-    
+
     public class BookController : Controller
     {
         private readonly IBookService bookService;
@@ -45,6 +41,7 @@ namespace BookWise.Controllers
             }
             var model = await bookService.Details(id);
             model.Authors = await bookService.GetAuthorsByBook(id);
+            model.Reviews = await bookService.GetReviewsByBook(id);
             return View(model);
         }
 

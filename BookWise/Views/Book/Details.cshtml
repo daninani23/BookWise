@@ -1,4 +1,5 @@
 ﻿@using System.Globalization;
+@using BookWise.Extensions;
 @model BookDetailsModel
 @{
     
@@ -7,6 +8,12 @@
 }
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr/>
+<style>
+    .star {
+        color: orange; 
+        font-size: 20px; 
+    }
+</style>
 
 <div class="container" style="display:inline">
     <div class="row">
@@ -39,14 +46,54 @@
             <p>
                 <b> First published: </b> <time>@(Model.PublicationDate.HasValue ? Model.PublicationDate.Value.ToString("MMMM dd, yyyy", new CultureInfo("en-US")) : "")</time>
             </p>
-        </div>
-            <hr />
-       
-            <h1>Rating and Reviews</h1>
-            <h3>What do <i>you</i> think ?</h3>
-            <p>
-                <a asp-action="Add" asp-controller="Review" asp-route-bookid="@Model.Id">Write a Review</a>
-            </p>
-       
+                <div style="display:inline">
+                    <h1>Rating and Reviews</h1>
+                </div>
+                @if (Model.Reviews.Any())
+                {
+                    foreach (var review in Model.Reviews)
+                    {
+                    <div class="img-box">
+                            <img src="~/images/read.png" alt="">@review.User.FirstName @review.User.LastName
+                        </div>
+                            @switch (review.Rating)
+                            {
+                                case 1:
+                                    <span class="star" data-value="1">★☆☆☆☆</span>
+                                    break;
+                                case 2:
+                                    <span class="star" data-value="1">★★☆☆☆</span>
+                                    break;
+                                case 3:
+                                    <span class="star" data-value="1">★★★☆☆</span>
+                                    break;
+                                case 4:
+                                    <span class="star" data-value="1">★★★★☆</span>
+                                    break;
+                                case 5:
+                                    <span class="star" data-value="1">★★★★★</span>
+                                    break;
+                            }
+                            
+                            <section>@review.ReviewText</section>
+                    
+                        <hr />
+                    }
+                }
+            @if (User.IsInRole("User"))
+            {
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-6 text-center">
+                        <div class="img-box">
+                            <img src="~/images/reviewUser.png" alt="">
+                        </div>
+                        <h3>What do <i>you</i> think?</h3>
+                        <a class="btn btn-primary" asp-action="Add" asp-controller="Review" asp-route-bookid="@Model.Id">Write a Review</a>
+                    </div>
+                </div>
+
+            }
+
+        </div>      
     </div>
 </div>

@@ -1,4 +1,5 @@
 ﻿using BookWise.Core.Contracts;
+using BookWise.Core.Models.Book;
 using BookWise.Core.Models.Review;
 using BookWise.Data.Seeding;
 using BookWise.Extensions;
@@ -14,13 +15,16 @@ namespace BookWise.Controllers
         public ReviewController(IReviewService _reviewService)
         {
             reviewService = _reviewService;
+
         }
+
         [HttpGet]
         [Authorize(Roles = GlobalConstants.UserRoleName)]
         public IActionResult Add()
         {
             var model = new ReviewFormModel();
             
+
             return View(model);
         }
 
@@ -47,5 +51,6 @@ namespace BookWise.Controllers
         
         }
 
+        
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookWise.Core.Models.Review;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,8 +17,8 @@ namespace BookWise.Core.Models.Book
 
         public int ReviewsCount { get; set; }
         public double Rating { get; set; }
-        //new
         public List<AuthorModel> Authors { get; set; } = new List<AuthorModel>();
+        public List<ReviewViewModel> Reviews { get; set; } = new List<ReviewViewModel>();
 
     }
 }

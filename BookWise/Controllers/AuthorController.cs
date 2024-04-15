@@ -1,14 +1,12 @@
 ﻿using BookWise.Core.Contracts;
 using BookWise.Core.Models.Author;
-using BookWise.Core.Models.Book;
-using BookWise.Core.Services;
 using BookWise.Data.Seeding;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookWise.Controllers
 {
-    
+
     public class AuthorController : Controller
     {
         private readonly IAuthorService authorService;

@@ -4,6 +4,7 @@ using BookWise.Infrastructure.Data.Common;
 using BookWise.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using System.Text.RegularExpressions;
 using static BookWise.Infrastructure.Data.DataConstants;
 using Author = BookWise.Infrastructure.Data.Models.Author;
 using Book = BookWise.Infrastructure.Data.Models.Book;
@@ -305,5 +306,57 @@ namespace BookWise.Core.Services
 
             return authorsByBook;
         }
+
+        public async Task<BookQueryServiceModel> AllF(string? genre = null, string? searchTerm = null, int currentPage = 1, int boksPerPage = 1)
+        {
+            var result = new BookQueryServiceModel();
+
+            var books = repo.All<Book>();
+
+            if (string.IsNullOrEmpty(genre) == false) 
+            {
+                books = books.Include(b => b.BookGenres)
+                            .ThenInclude(bg => bg.Genre)
+                            .Where(b => b.BookGenres.Any(g => g.Genre.Name == genre));
+            }
+            if (string.IsNullOrEmpty(searchTerm) == false)
+            {
+                searchTerm = $"%{searchTerm.ToLower()}%";
+                books = books.Where(b => EF.Functions.Like(b.Title.ToLower(), searchTerm)
+                   || EF.Functions.Like(b.Publisher.ToLower(), searchTerm)
+                    || EF.Functions.Like(b.Description.ToLower(), searchTerm)
+                     || b.BookAuthors.Any(a =>
+           EF.Functions.Like(a.Author.FirstName.ToLower(), searchTerm) 
+        || EF.Functions.Like(a.Author.LastName.ToLower(), searchTerm)
+    )
+                   );
+            }
+
+            result.Books=await books
+                .Skip((currentPage-1)*boksPerPage)
+                .Take(boksPerPage)
+                .Select(b=>new BookServiceModel()
+                { 
+Title=b.Title,
+Id=b.Id,
+ImageUrl=b.ImageUrl,
+Description=b.Description,
+BookAuthors= b.BookAuthors.Select(a => $"{a.Author.FirstName} {a.Author.LastName}").ToList(),
+BookGenres=b.BookGenres.Select(a=>a.Genre.Name).ToList()
+                })
+                .ToListAsync();
+
+            result.TotalBooksCount = await books.CountAsync();
+
+            return result;
+
+        }
+
+        public async Task<IEnumerable<string>> AllGenresNames()
+        {
+            return await repo.AllReadonly<BookGenre>().Select(c=>c.Genre.Name).Distinct().ToListAsync();   
+        }
+
+
     }
 }

@@ -25,5 +25,7 @@ namespace BookWise.Data.Models
         public ICollection<ApplicationUserRole> UserRoles { get; set; }
 
 
+
+
     }
 }

@@ -22,5 +22,13 @@ namespace BookWise.Core.Contracts
         Task<bool> Delete(int id);
         Task<List<AuthorModel>> GetAuthorsByBook(int bookId);
 
+        Task<BookQueryServiceModel> AllF(
+            string? genre=null,
+            string? searchTerm=null,
+            int currentPage=1,
+            int boksPerPage=1);
+
+        Task<IEnumerable<string>> AllGenresNames();
+
     }
 }

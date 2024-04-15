@@ -150,6 +150,17 @@ namespace BookWise.Controllers
             }
             return RedirectToAction(nameof(All));
         }
+
+        public async Task<IActionResult> AllF([FromQuery]AllBooksQueryModel query) 
+        {
+            var result = await bookService.AllF(query.Genre, query.SearchTerm,query.CurrentPage,AllBooksQueryModel.BooksPerPage);
+
+            query.TotalBooksCount = result.TotalBooksCount;
+            query.Genres = await bookService.AllGenresNames();
+            query.Books = result.Books;
+
+            return View(query);   
+        }
     }
   
 }

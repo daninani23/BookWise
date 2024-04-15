@@ -4,9 +4,6 @@ using BookWise.Data.Seeding;
 using BookWise.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System.Diagnostics;
-using System.Security.Claims;
 
 namespace BookWise.Controllers
 {

@@ -1,5 +1,4 @@
 ﻿using BookWise.Core.Contracts;
-using BookWise.Core.Models.Book;
 using BookWise.Core.Models.Review;
 using BookWise.Data.Seeding;
 using BookWise.Extensions;

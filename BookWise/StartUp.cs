@@ -32,7 +32,7 @@ namespace BookWise
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireDigit = false;
-                //options.Password.RequiredLength = PASSWORD_MIN_LENGTH;
+                
             })
             .AddRoles<ApplicationRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -41,7 +41,7 @@ namespace BookWise
             services.AddControllersWithViews();
             services.AddApplicationServices();
 
-            //services.AddAutoMapper(Assembly.GetExecutingAssembly());
+           
 
             services.AddControllersWithViews(options =>
             {
@@ -54,7 +54,6 @@ namespace BookWise
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
-            //RegisterServices(services);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

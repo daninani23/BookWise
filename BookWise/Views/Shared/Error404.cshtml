@@ -1,0 +1,21 @@
+﻿﻿@{
+    ViewData["Title"] = "404!";
+}
+
+<main>
+    <section>
+        <article>
+            <div class="container-main first-part">
+                    <div class="title-stuff" style="text-align: center;">
+                        <div class="text" style="display: inline-block; text-align: left;">
+                            <h1>@ViewBag.Title</h1>
+                        <p>The page was not found, but the book has more pages!</p>
+                        </div>
+                        <img src="~/images/404.png" height="512px" width="512px" style="display: block; margin: 0 auto;" />
+
+                        <div>Go back to <a asp-area="" asp-controller="Home" asp-action="Index">Home</a></div>
+                    </div>
+                </div>
+        </article>
+    </section>
+</main>

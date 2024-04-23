@@ -128,6 +128,7 @@ namespace BookWise.Core.Services
        {
            Id = b.Id,
            Title = b.Title,
+           ImageUrl= b.ImageUrl
        })
        .ToListAsync();
 

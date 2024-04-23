@@ -51,7 +51,7 @@ namespace BookWise
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = $"/User/Login";
-                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+                options.AccessDeniedPath = $"/Home/AccessDenied";
             });
 
         }
@@ -63,12 +63,11 @@ namespace BookWise
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error/500");
-                app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
-                app.UseHsts();
-            }
+
+            app.UseExceptionHandler("/Home/Error/");
+            app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
+            app.UseHsts();
+            
 
             app.MigrateDatabaseAsync().GetAwaiter().GetResult();
             SeedDataBase(app).GetAwaiter().GetResult();

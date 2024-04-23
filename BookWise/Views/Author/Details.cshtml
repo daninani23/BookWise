@@ -3,6 +3,7 @@
 @model AuthorDetailsModel
 @{
     ViewBag.Title = "About the author";
+    bool first = true;
 }
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
@@ -21,16 +22,37 @@
                 <b> Birth Date: </b> <time>@(Model.BirthDate.HasValue ? Model.BirthDate.Value.ToString("MMMM dd, yyyy", new CultureInfo("en-US")) : "")</time>
             </p>
             <p>@Model.Description</p>
-            <h2>Books:</h2>
-        <ul>
+            
+
+        </div>
+</div>
+        <h2>Books:</h2>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
                 @foreach (var book in Model.Books)
                 {
-                    <li>
-                        <a href="@Url.Action("Details", "Book", new { id = book.Id })">@book.Title</a>
-                    </li>
+                    <div class="carousel-item @(first ? "active" : string.Empty)">
+                        <img class="d-block w-60 mx-auto" style="height:600px"
+                         src="@book.ImageUrl" alt="@book.Title">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>
+                                <a class="btn btn-primary" asp-controller="Book" asp-action="Details"
+                               asp-route-id="@book.Id"> @book.Title</a>
+                            </h5>
+                        </div>
+                    </div>
+                    first = false;
                 }
-        </ul>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        
     </div>
-</div>
+       
+

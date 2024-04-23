@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Access Denied!";
+}
+
+<main>
+    <section>
+        <article>
+            <div class="container-main first-part">
+                <div class="title-stuff" style="text-align: center;">
+                    <div class="text" style="display: inline-block; text-align: left;">
+                        <h1>@ViewBag.Title</h1>
+                        <p>Access Denied!</p>
+                    </div>
+                    <img src="~/images/error.png" height="512px" width="512px" style="display: block; margin: 0 auto;" />
+
+                    <div>Go back to <a asp-area="" asp-controller="Home" asp-action="Index">Home</a></div>
+                </div>
+            </div>
+        </article>
+    </section>
+</main>

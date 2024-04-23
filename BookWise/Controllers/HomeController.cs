@@ -1,7 +1,6 @@
 ﻿using BookWise.Core.Contracts;
-using BookWise.Models;
+using BookWise.Core.Models.Book;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace BookWise.Controllers
 {
@@ -19,7 +18,17 @@ namespace BookWise.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await bookService.LastFourBooks();
+            IEnumerable<BookHomeModel> model;
+
+            try
+            {
+                model = await bookService.LastFourBooks();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
             return View(model);
         }
 
@@ -31,7 +40,7 @@ namespace BookWise.Controllers
                 return View("Error404");
             }
 
-            if (statusCode == 500)
+            if (statusCode == StatusCodes.Status500InternalServerError)
             {
                 return View("Error500");
             }

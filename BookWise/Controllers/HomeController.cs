@@ -31,13 +31,9 @@ namespace BookWise.Controllers
                 return View("Error404");
             }
 
-            else if (statusCode == 500)
+            if (statusCode == 500)
             {
                 return View("Error500");
-            }
-            else 
-            {
-                return View("Error");
             }
 
             return View();

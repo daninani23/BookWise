@@ -8,5 +8,8 @@
 
         public int BookId { get; set; }
 
+        public string BookImage { get; set; } = null!;
+        public string BookTitle { get; set; } = null!;
+
     }
 }

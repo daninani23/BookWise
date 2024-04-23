@@ -4,26 +4,36 @@ using BookWise.Data.Seeding;
 using BookWise.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static BookWise.Infrastructure.Data.DataConstants;
 
 namespace BookWise.Controllers
 {
     public class ReviewController : Controller
     {
         private readonly IReviewService reviewService;
+        private readonly IBookService bookService;
 
-        public ReviewController(IReviewService _reviewService)
+        public ReviewController(IReviewService _reviewService, IBookService _bookService)
         {
             reviewService = _reviewService;
+            bookService = _bookService;
 
         }
 
         [HttpGet]
         [Authorize(Roles = GlobalConstants.UserRoleName)]
-        public IActionResult Add()
+        public async Task<IActionResult> Add(int bookid)
         {
             var model = new ReviewFormModel();
-            
 
+            var book = await reviewService.GetBookByIdAsync(bookid);
+
+            if (book != null)
+            {
+                model.BookImage=book.ImageUrl; 
+                model.BookTitle=book.Title;
+
+            }
             return View(model);
         }
 

@@ -4,13 +4,38 @@
 
 @{
     ViewData["Title"] = "Add Review";
-    ViewBag.Button = "Add";
+    ViewBag.Button = "Post";
 }
+<style>
+    .book {
+        float: left; 
+        margin-right: 20px;
+        text-align: center;
+    }
+    .book img {
+         display: block; 
+         margin: 0 auto 10px;
+    }
 
+    .rating {
+        font-size: 27px;
+    }
+    form {
+        overflow: hidden;
+        text-align: center;
+    }
+
+</style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+<div class="book">
+<img src="@Model.BookImage" alt="Book Image" height="400px" width="300px"/>
+@*<h2>@Model.BookTitle</h2>*@
+</div>
 <form method="post">
     <div class="form-group">
-        <label asp-for="Rating" class="control-label">Rate this book:</label>
+        <label asp-for="Rating" class="control-label"><b>Rate this book:</b></label>
         <input type="hidden" id="ratingInput" name="Rating" class="form-control" min="1" max="5" step="1" />
         <span asp-validation-for="Rating" class="text-danger"></span>
     </div>
@@ -22,13 +47,13 @@
         <span class="star" data-value="5">☆</span>
     </div>
     <div class="form-group">
-        <label asp-for="ReviewText" class="control-label">What did you think of the book?</label>
-        <textarea asp-for="ReviewText" class="form-control" rows="12"></textarea>
+        <label asp-for="ReviewText" class="control-label"><b>What did you think of the book?</b></label>
+        <textarea asp-for="ReviewText" class="form-control" rows="10"></textarea>
         <span asp-validation-for="ReviewText" class="text-danger"></span>
     </div>
     <br />
     <div class="btn-box">
-        <input class="input-button" type="submit" value="@ViewBag.Button" />
+        <input class="btn btn-primary" type="submit" value="@ViewBag.Button" />
     </div>
 </form>
 

@@ -49,5 +49,10 @@ namespace BookWise.Core.Services
 
             return review.Id;
         }
+
+        public async Task<Book> GetBookByIdAsync(int bookid) 
+        {
+            return await repo.GetByIdAsync<Book>(bookid);
+        }
     }
 }

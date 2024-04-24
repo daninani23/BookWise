@@ -7,11 +7,24 @@
 }
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
+<style>
+    .book-item {
+        display: inline-block; 
+        width: 300px; 
+        margin: 10px; 
+    }
+
+        .book-item img {
+            width: 300px; 
+            height: 500px; 
+            object-fit: cover; 
+        }
+</style>
 
 <div class="container" style="display:inline">
     <div class="row">
         <div class="col-4">
-            <img class="card-img-top" style="width: 20rem;"
+            <img class="card-img-top" style="width: 25rem"
                  src="@Model.ImageUrl" alt="Author Image">
         </div>
         <div class="card col-8 border-0">
@@ -22,37 +35,25 @@
                 <b> Birth Date: </b> <time>@(Model.BirthDate.HasValue ? Model.BirthDate.Value.ToString("MMMM dd, yyyy", new CultureInfo("en-US")) : "")</time>
             </p>
             <p>@Model.Description</p>
-            
 
         </div>
-</div>
-        <h2>Books:</h2>
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
+    </div>
+ </div>
+      </br>
+         <h4>Author's Books:</h4>
+              <ul>
                 @foreach (var book in Model.Books)
                 {
-                    <div class="carousel-item @(first ? "active" : string.Empty)">
-                        <img class="d-block w-60 mx-auto" style="height:600px"
-                         src="@book.ImageUrl" alt="@book.Title">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>
-                                <a class="btn btn-primary" asp-controller="Book" asp-action="Details"
-                               asp-route-id="@book.Id"> @book.Title</a>
-                            </h5>
-                        </div>
+                <div class="book-item">
+                    <img class="img-thumbnail" src="@book.ImageUrl" alt="Book Image">
+                   <div class="text-center">
+                       <h5>
+                            <a class="btn btn-primary" asp-controller="Book" asp-action="Details"
+                       asp-route-id="@book.Id"> @book.Title</a>
+                        </h5>
                     </div>
-                    first = false;
+                </div>
                 }
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </div>
+              </ul>
        
 

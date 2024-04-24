@@ -4,7 +4,6 @@ using BookWise.Core.Models.Book;
 using BookWise.Infrastructure.Data.Common;
 using BookWise.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using static BookWise.Infrastructure.Data.DataConstants;
 using Author = BookWise.Infrastructure.Data.Models.Author;
 using Book = BookWise.Infrastructure.Data.Models.Book;
 

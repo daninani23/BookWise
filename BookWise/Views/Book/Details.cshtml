@@ -49,37 +49,6 @@
                 <div style="display:inline">
                     <h1>Rating and Reviews</h1>
                 </div>
-                @if (Model.Reviews.Any())
-                {
-                    foreach (var review in Model.Reviews)
-                    {
-                    <div class="img-box">
-                            <img src="~/images/read.png" alt="">@review.User.FirstName @review.User.LastName
-                        </div>
-                            @switch (review.Rating)
-                            {
-                                case 1:
-                                    <span class="star" data-value="1">★☆☆☆☆</span>
-                                    break;
-                                case 2:
-                                    <span class="star" data-value="1">★★☆☆☆</span>
-                                    break;
-                                case 3:
-                                    <span class="star" data-value="1">★★★☆☆</span>
-                                    break;
-                                case 4:
-                                    <span class="star" data-value="1">★★★★☆</span>
-                                    break;
-                                case 5:
-                                    <span class="star" data-value="1">★★★★★</span>
-                                    break;
-                            }
-                            
-                            <section>@review.ReviewText</section>
-                    
-                        <hr />
-                    }
-                }
             @if (User.IsInRole("User"))
             {
                 <div class="row justify-content-center align-items-center">
@@ -93,7 +62,41 @@
                 </div>
 
             }
+                @if (Model.Reviews.Any())
+            {
+                foreach (var review in Model.Reviews)
+                {
+                    <div class="img-box">
+                        <img src="~/images/read.png" alt="">@review.User.FirstName @review.User.LastName
+                    </div>
+                    @switch (review.Rating)
+                    {
+                        case 1:
+                            <span class="star" data-value="1">★☆☆☆☆</span>
+                            break;
+                        case 2:
+                            <span class="star" data-value="1">★★☆☆☆</span>
+                            break;
+                        case 3:
+                            <span class="star" data-value="1">★★★☆☆</span>
+                            break;
+                        case 4:
+                            <span class="star" data-value="1">★★★★☆</span>
+                            break;
+                        case 5:
+                            <span class="star" data-value="1">★★★★★</span>
+                            break;
+                    }
 
+                    <section>@review.ReviewText</section>
+
+                    <hr />
+                }
+            }
+            else
+            {
+                <h3 class="text-center">No reviews added yet</h3>
+            }
         </div>      
     </div>
 </div>

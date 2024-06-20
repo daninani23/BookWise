@@ -331,7 +331,8 @@ namespace BookWise.Core.Services
 
             if (string.IsNullOrEmpty(genre) == false) 
             {
-                books = books.Include(b => b.BookGenres)
+                books = books
+                    .Include(b => b.BookGenres)
                             .ThenInclude(bg => bg.Genre)
                             .Where(b => b.BookGenres.Any(g => g.Genre.Name == genre));
             }

@@ -16,7 +16,7 @@ namespace BookWise.Core.Services
             repo = _repo;
         }
 
-        public async Task<int> CreateAsync(ReviewFormModel model, int bookid, string userId)
+        public async Task<int> CreateAsync(ReviewModel model, int bookid, string userId)
         {
             var review = new Review()
             {

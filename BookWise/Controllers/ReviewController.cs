@@ -4,7 +4,6 @@ using BookWise.Data.Seeding;
 using BookWise.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using static BookWise.Infrastructure.Data.DataConstants;
 
 namespace BookWise.Controllers
 {
@@ -39,9 +38,9 @@ namespace BookWise.Controllers
 
         [HttpPost]
         [Authorize(Roles = GlobalConstants.UserRoleName)]
-        public async Task<IActionResult> Add(ReviewFormModel model,int bookid)
+        public async Task<IActionResult> Add(ReviewModel model,int bookid)
         {
-           
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -55,7 +54,6 @@ namespace BookWise.Controllers
             catch (Exception ex)
             {
                 return RedirectToAction("Error", "Home");
-            
              }
         
         }

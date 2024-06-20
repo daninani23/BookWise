@@ -4,7 +4,7 @@
 
     @foreach (var book in Model)
     {
-        <div class="col-md-4">
+        <div class="col-md-4 mb-4">
             <div class="box">
                 <div class="img-box">
                     <img src="@book.ImageUrl" style="height: 400px;" alt="@book.Title">
@@ -16,7 +16,7 @@
                     <h5 style="margin-bottom = 50px;">
                         @book.Title
                     </h5>
-                   <h6 class="font-italic font-weight-bold">@string.Join(", ", book.BookGenres)</h6>
+                    <h6 class="font-italic font-weight-bold">@string.Join(", ", book.BookGenres)</h6>
                     <p>
                         @book.Description...
                     </p>
@@ -24,17 +24,16 @@
                     <a asp-controller="Book" asp-action="Details" asp-route-id="@book.Id" class="btn btn-primary btn-lg"
                    role="button">Read More</a>
 
-                   @if (User.IsInRole("Administrator"))
-            {
+                    @if (User.IsInRole("Administrator"))
+                    {
                         <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-primary btn-lg"
                    role="button">Edit</a>
                         <a asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id" class="btn btn-primary btn-lg"
                    role="button">Delete</a>
-            }
-                        
+                    }
+
                 </div>
             </div>
         </div>
     }
 </div>
-

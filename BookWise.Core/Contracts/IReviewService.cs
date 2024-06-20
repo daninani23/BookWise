@@ -10,7 +10,7 @@ namespace BookWise.Core.Contracts
 {
     public interface IReviewService
     {
-        Task<int> CreateAsync(ReviewFormModel model, int bookid, string userId);
+        Task<int> CreateAsync(ReviewModel model, int bookid, string userId);
 
         Task<Book> GetBookByIdAsync(int bookid);
     }

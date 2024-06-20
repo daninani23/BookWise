@@ -8,7 +8,7 @@
     }
     else
     {
-        ViewData["Title"] = genre;
+        ViewData["Title"] = "Our suggestions";
     }
 
 }
@@ -16,9 +16,12 @@
 <section class="blog_section layout_padding">
     <div class="container">
         <div class="heading_container heading_center">
-            <h2>
+            <h2 class="text-center">
+                @ViewData["Title"]
             </h2>
+            <hr />
         </div>
+        <br/>
 
         @if (!Model.Any())
         {

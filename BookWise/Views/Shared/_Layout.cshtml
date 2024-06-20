@@ -11,7 +11,38 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BookWise.styles.css" asp-append-version="true" />
 </head>
-    
+<style>
+
+    body {
+        background-color: #E0F7FA; /* Основен фон - Светлосин */
+        color: #333333; /* Основен текст - Тъмносив */
+    }
+
+    .card.col-8.border-0 {
+        background-color: #E0F7FA; /* Светлосин фон за card */
+    }
+
+    .btn-primary.disabled {
+        background-color: #FFA500; /* Бутони - Оранжево */
+    }
+
+    .btn-primary {
+        background-color: #FFA500; /* Бутони - Оранжево */
+        color: #FFFFFF;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #003366; /* Бутони при задържане - Тъмночервено */
+     }
+
+     form #add-review
+     {
+         border:medium;
+     }
+</style>
 <body>
     <header>
         <nav id="nav" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
